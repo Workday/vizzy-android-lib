@@ -28,17 +28,17 @@ android {
 //        testInstrumentationRunnerArguments pullRequestNumber: System.getenv("PULL_REQUEST") as String
     }
 ```
-If pullRequestNumber is passed, then a proper build is created:
+If `pullRequestNumber` is passed, then a proper build is created:
 
 * New images got added to base images
 
-If pullRequestNumber is not passed, then a developer build is created:
+If `pullRequestNumber` is not passed, then a developer build is created:
 
 * New images are not added to Vizzy
 * Visual diffs are performed, but base images can not be replaced
 * Build will be deleted from the server after 24 hours
 
-While on a CICD pipeline, the PULL_REQUEST value should be passed by the system. When running on local dev machines, it can be ignored and a dev build will be generated.
+While on a CICD pipeline, the `PULL_REQUEST` value should be passed by the system. When running on local dev machines, it can be ignored and a dev build will be generated.
 
 ### Notes
 
@@ -48,11 +48,11 @@ Replacing the instrumentation test runner will add the following:
 
 projectId is just a number you get after creating it on the Vizzy server.
 
-commitSha is only used to link Vizzy with git, it is not mandatory and you can do PR builds without it.
+`commitSha` is only used to link Vizzy with git, it is not mandatory and you can do PR builds without it.
 
 ## Usage
 
-The library adds the  extension function addVizzyTest() to ActivityTestRule. This method creates a screenshot and stores it on a folder structure matching the package name, then the class name and then the method name, including sequential numbers as the name. The name of the screenshot can be overrited when passing name as a parameter.
+The library adds the  extension function `addVizzyTest()` to `ActivityTestRule`. This method creates a screenshot and stores it on a folder structure matching the package name, then the class name and then the method name, including sequential numbers as the name. The name of the screenshot can be overrited when passing name as a parameter.
 
 
 ```Kotlin
