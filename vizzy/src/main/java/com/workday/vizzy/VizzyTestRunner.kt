@@ -2,7 +2,8 @@ package com.workday.vizzy
 
 import android.app.Activity.RESULT_OK
 import android.os.Bundle
-import android.support.test.runner.AndroidJUnitRunner
+import androidx.test.espresso.accessibility.AccessibilityChecks
+import androidx.test.runner.AndroidJUnitRunner
 import kotlinx.coroutines.runBlocking
 import java.io.*
 
@@ -18,6 +19,8 @@ class VizzyTestRunner : AndroidJUnitRunner() {
 
         private const val PULL_REQUEST_NUMBER = "pullRequestNumber"
         private const val COMMIT_SHA = "commitSha"
+
+        private const val VIZZY_ENABLE_ACCESSIBILITY_CHECKS = "enableAccessibilityChecks"
     }
 
     lateinit var imagesDir: File
@@ -25,6 +28,7 @@ class VizzyTestRunner : AndroidJUnitRunner() {
 
     private var pullRequestNumber: String? = null
     private var commitSha: String? = null
+    private var enableAccessibilityChecks = false
 
     override fun onCreate(arguments: Bundle?) {
         super.onCreate(arguments)
@@ -38,6 +42,13 @@ class VizzyTestRunner : AndroidJUnitRunner() {
             // Optional parameters
             pullRequestNumber = arguments.getString(PULL_REQUEST_NUMBER)
             commitSha = arguments.getString(COMMIT_SHA)
+
+            if (arguments.containsKey(VIZZY_ENABLE_ACCESSIBILITY_CHECKS)) {
+                enableAccessibilityChecks = arguments.getString(VIZZY_ENABLE_ACCESSIBILITY_CHECKS).toBoolean()
+            }
+            if (enableAccessibilityChecks){
+                AccessibilityChecks.enable();
+            }
         }
     }
 

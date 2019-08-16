@@ -25,6 +25,9 @@ android {
         // Example for reading the CICD variables from the environment as Jenkins passes them
 //        testInstrumentationRunnerArguments pullRequestNumber: System.getenv("PULL_REQUEST") as String
 //        testInstrumentationRunnerArguments commitSha: System.getenv("GIT_COMMIT") as String ?: ""
+
+        testInstrumentationRunnerArguments enableAccessibilityChecks: "false"
+
     }
     buildTypes {
         release {
@@ -41,9 +44,10 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
 
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    implementation "androidx.test.espresso:espresso-accessibility:3.2.0"
+    androidTestImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation project(path: ':vizzy')
 
 }

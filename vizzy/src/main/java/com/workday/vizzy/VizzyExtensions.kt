@@ -1,9 +1,12 @@
 package com.workday.vizzy
 
 import android.app.Activity
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.screenshot.Screenshot
 import android.widget.FrameLayout
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.accessibility.AccessibilityChecks
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.rule.ActivityTestRule
+import androidx.test.runner.screenshot.Screenshot
 import java.io.File
 import java.io.FileOutputStream
 
@@ -14,13 +17,15 @@ fun <T: Activity> ActivityTestRule<T>.addVizzyTest(screenshotName: String = "") 
         fileName = Thread.currentThread().stackTrace[4].methodName
     }
 
-    activity.findViewById<FrameLayout>(android.R.id.content).post {
+    val contentView = activity.findViewById<FrameLayout>(android.R.id.content)
+    contentView.post {
         captureScreenshot(activity, "${activity.localClassName}_${fileName}")
         screenshotTaken = true
     }
     while (!screenshotTaken) {
         Thread.sleep(10)
     }
+    AccessibilityChecks.accessibilityAssertion()
 }
 
 fun captureScreenshot(activity: Activity, fileName: String) {
