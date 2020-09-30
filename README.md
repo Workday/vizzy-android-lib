@@ -4,9 +4,14 @@ An Android library to simplify vizzy integration
 Vizzy is a powerful Ruby on Rails web server that facilitates Visual Automation, a continuous integration testing strategy that aims to prevent visual regressions, also open sourced here: https://github.com/Workday/vizzy
 
 ## Installation
-At some stage this should be in jcenter and just be added as a dependency
+The library is available on jcenter, so just add it to your dependencies on the build.gradle of the project
 
-__TBD__
+```groovy
+dependencies {
+    [...]
+    androidTestImplementation 'com.workday.vizzy:vizzy_android:1.0'
+}
+```
 
 ## Configuration
 
