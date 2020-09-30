@@ -15,7 +15,7 @@ dependencies {
 
 ## Configuration
 
-Add the following to your build.gradle:
+The library uses a custom Test Runner that requires some parameters, you can configure it all on the build.gradle:
 
 ```groovy
 android {
