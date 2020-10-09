@@ -1,25 +1,27 @@
 package com.workday.vizzy
 
 import android.app.Activity
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.screenshot.Screenshot
 import android.widget.FrameLayout
+import androidx.test.core.app.ActivityScenario
+import androidx.test.runner.screenshot.Screenshot
 import java.io.File
 import java.io.FileOutputStream
 
-fun <T: Activity> ActivityTestRule<T>.addVizzyTest(screenshotName: String = "") {
+fun <A : Activity> ActivityScenario<A>.addVizzyTest(screenshotName: String = "") {
     var screenshotTaken = false
     var fileName = screenshotName
     if (fileName.isEmpty()) {
         fileName = Thread.currentThread().stackTrace[4].methodName
     }
 
-    activity.findViewById<FrameLayout>(android.R.id.content).post {
-        captureScreenshot(activity, "${activity.localClassName}_${fileName}")
-        screenshotTaken = true
-    }
-    while (!screenshotTaken) {
-        Thread.sleep(10)
+    this.onActivity {
+        it.findViewById<FrameLayout>(android.R.id.content).post {
+            captureScreenshot(it, "${it.localClassName}_${fileName}")
+            screenshotTaken = true
+        }
+        while (!screenshotTaken) {
+            Thread.sleep(10)
+        }
     }
 }
 
@@ -28,7 +30,7 @@ private fun captureScreenshot(activity: Activity, fileName: String) {
     screenCapture.name = fileName
 
     // If we have more than one asset per method, we just append a number
-    val vizzyDir = "${activity.filesDir.path}/${VizzyTestRunner.VIZZY_DIR}"
+    val vizzyDir = "${activity.filesDir.path}/"//${VizzyTestRunner.VIZZY_DIR}"
     val directory = activity.packageName.replace('.', '/')
     val fullDirectory = File("$vizzyDir/$directory")
     fullDirectory.mkdirs()
