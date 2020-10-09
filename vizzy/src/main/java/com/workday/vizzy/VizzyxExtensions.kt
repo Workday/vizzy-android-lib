@@ -15,13 +15,9 @@ fun <A : Activity> ActivityScenario<A>.addVizzyTest(screenshotName: String = "")
     }
 
     this.onActivity {
-        it.findViewById<FrameLayout>(android.R.id.content).post {
-            captureScreenshot(it, "${it.localClassName}_${fileName}")
-            screenshotTaken = true
-        }
-        while (!screenshotTaken) {
-            Thread.sleep(10)
-        }
+        val contentView = it.findViewById<FrameLayout>(android.R.id.content)
+        captureScreenshot(it, "${it.localClassName}_${fileName}")
+        screenshotTaken = true
     }
 }
 
@@ -30,7 +26,7 @@ private fun captureScreenshot(activity: Activity, fileName: String) {
     screenCapture.name = fileName
 
     // If we have more than one asset per method, we just append a number
-    val vizzyDir = "${activity.filesDir.path}/"//${VizzyTestRunner.VIZZY_DIR}"
+    val vizzyDir = "${activity.filesDir.path}/${VizzyxTestRunner.VIZZY_DIR}"
     val directory = activity.packageName.replace('.', '/')
     val fullDirectory = File("$vizzyDir/$directory")
     fullDirectory.mkdirs()
